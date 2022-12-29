@@ -52,6 +52,70 @@ def GET_AGGREGATE_TRADES_LIST(SYMBOL):
         "WAS_THE_BUYER_THE_MAKER":WAS_THE_BUYER_THE_MAKER
     })
 
-df = GET_AGGREGATE_TRADES_LIST('btcusdt')
+def GET_CANDLESTICK_DATA(SYMBOL,INTERVAL,LIMIT=500):
+    if not INTERVAL in ['1s','1m','3m','5m','15m','30m','1h','2h','4h','6h','8h','12h','1d','3d','1w','1M']:
+        print('It has been determined that the specified interval is invalid. Please note that the valid intervals are as follows:')
+        print("'1s','1m','3m','5m','15m','30m','1h','2h','4h','6h','8h','12h','1d','3d','1w','1M'. Please select one of these intervals for use.")
+    URL = f'https://www.binance.com/api/v3/klines?symbol={SYMBOL.upper()}&interval={INTERVAL}' 
+    if LIMIT == 1000:
+        URL = f'https://www.binance.com/api/v3/klines?symbol={SYMBOL.upper()}&interval={INTERVAL}&limit=1000' 
+    RES = requests.get(URL)
+    if RES.status_code != 200:
+        return "It has been determined that the symbol provided is invalid. Please utilize the GET_SYMBOLS function to retrieve a list of valid symbols, and display them for reference."
+    # OPEN_TIME,OPEN_PRICE,HIGH_PRICE,LOW_PRICE,CLOSE_PRICE,VOLUME,CLOSE_TIME
+    CANDLESTICK_DATA = RES.json()
+    OPEN_TIME = [CANDLESTICK[0] for CANDLESTICK in CANDLESTICK_DATA]
+    OPEN_PRICE = [float(CANDLESTICK[1]) for CANDLESTICK in CANDLESTICK_DATA]
+    HIGH_PRICE = [float(CANDLESTICK[2]) for CANDLESTICK in CANDLESTICK_DATA]
+    LOW_PRICE = [float(CANDLESTICK[3]) for CANDLESTICK in CANDLESTICK_DATA]
+    CLOSE_PRICE = [float(CANDLESTICK[4]) for CANDLESTICK in CANDLESTICK_DATA]
+    VOLUME = [float(CANDLESTICK[5]) for CANDLESTICK in CANDLESTICK_DATA]
+    CLOSE_TIME = [CANDLESTICK[6] for CANDLESTICK in CANDLESTICK_DATA]
+    return DataFrame({
+        'OPEN_TIME':OPEN_TIME,
+        'OPEN_PRICE':OPEN_PRICE,
+        'HIGH_PRICE':HIGH_PRICE,
+        'LOW_PRICE':LOW_PRICE,
+        'CLOSE_PRICE':CLOSE_PRICE,
+        'VOLUME':VOLUME,
+        'CLOSE_TIME':CLOSE_TIME,
+    })
+
+def GET_UIKLINES(SYMBOL,INTERVAL,LIMIT=500):
+    if not INTERVAL in ['1s','1m','3m','5m','15m','30m','1h','2h','4h','6h','8h','12h','1d','3d','1w','1M']:
+        txt = '''
+        It has been determined that the specified interval is invalid. Please note that the valid intervals are as follows:\n
+        '1s','1m','3m','5m','15m','30m','1h','2h','4h','6h','8h','12h','1d','3d','1w','1M'. Please select one of these intervals for use.
+        '''
+        return txt
+    URL = f'https://www.binance.com/api/v3/klines?symbol={SYMBOL.upper()}&interval={INTERVAL}' 
+    if LIMIT == 1000:
+        URL = f'https://www.binance.com/api/v3/klines?symbol={SYMBOL.upper()}&interval={INTERVAL}&limit=1000' 
+    RES = requests.get(URL)
+    if RES.status_code != 200:
+        return "It has been determined that the symbol provided is invalid. Please utilize the GET_SYMBOLS function to retrieve a list of valid symbols, and display them for reference."
+    # OPEN_TIME,OPEN_PRICE,HIGH_PRICE,LOW_PRICE,CLOSE_PRICE,VOLUME,CLOSE_TIME
+    CANDLESTICK_DATA = RES.json()
+    OPEN_TIME = [CANDLESTICK[0] for CANDLESTICK in CANDLESTICK_DATA]
+    OPEN_PRICE = [float(CANDLESTICK[1]) for CANDLESTICK in CANDLESTICK_DATA]
+    HIGH_PRICE = [float(CANDLESTICK[2]) for CANDLESTICK in CANDLESTICK_DATA]
+    LOW_PRICE = [float(CANDLESTICK[3]) for CANDLESTICK in CANDLESTICK_DATA]
+    CLOSE_PRICE = [float(CANDLESTICK[4]) for CANDLESTICK in CANDLESTICK_DATA]
+    VOLUME = [float(CANDLESTICK[5]) for CANDLESTICK in CANDLESTICK_DATA]
+    CLOSE_TIME = [CANDLESTICK[6] for CANDLESTICK in CANDLESTICK_DATA]
+    return DataFrame({
+        'OPEN_TIME':OPEN_TIME,
+        'OPEN_PRICE':OPEN_PRICE,
+        'HIGH_PRICE':HIGH_PRICE,
+        'LOW_PRICE':LOW_PRICE,
+        'CLOSE_PRICE':CLOSE_PRICE,
+        'VOLUME':VOLUME,
+        'CLOSE_TIME':CLOSE_TIME,
+    })
+
+
+    
+    
+df = GET_UIKLINES('btcusdt','20m',1000)
 print(df)
 
