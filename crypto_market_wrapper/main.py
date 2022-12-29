@@ -1,4 +1,5 @@
 import requests
+import urllib
 from pandas import DataFrame
 
 def GET_SYMBOLS():
@@ -120,13 +121,86 @@ def GET_CURRENT_AVERAGE_PRICE(SYMBOL):
         return "It has been determined that the symbol provided is invalid. Please utilize the GET_SYMBOLS function to retrieve a list of valid symbols, and display them for reference."
     return RES.json()
 
-def GET_TICKER_PRICE_CHANGE_24H(SYMBOL):
-    URL = f'https://www.binance.com/api/v3/ticker/24hr?symbol={SYMBOL}' 
+def GET_TICKER_PRICE_CHANGE_24H(SYMBOLS=["BTCUSDT"]):
+    SYMBOLS = [SYMBOL.upper() for SYMBOL in SYMBOLS]
+    STR = urllib.parse.quote(str(SYMBOLS).replace("'",'"'))
+    STR = STR.replace('%2C%20',',')
+    URL = f'https://www.binance.com/api/v3/ticker/24hr?symbols={STR}' 
+    RES = requests.get(URL)
+    if RES.status_code != 200:
+        return "It has been determined that the symbol provided is invalid. Please utilize the GET_TICKER_PRICE_CHANGE_24H function to retrieve a list of valid symbols, and display them for reference."
+    TICKER_PRICE_CHANGE_24H = RES.json()
+    SYMBOL = [TICKER_PRICE_CHANGE['symbol'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    PRICE_CHANGE = [TICKER_PRICE_CHANGE['priceChange'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    PRICE_CHANGE_PERCENT = [TICKER_PRICE_CHANGE['priceChangePercent'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    WEIGHTED_AVGPRICE = [TICKER_PRICE_CHANGE['weightedAvgPrice'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    PREV_CLOSE_PRICE = [TICKER_PRICE_CHANGE['prevClosePrice'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    LAST_PRICE = [TICKER_PRICE_CHANGE['lastPrice'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    LAST_QTY = [TICKER_PRICE_CHANGE['lastQty'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    BID_PRICE = [TICKER_PRICE_CHANGE['bidPrice'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    BID_QTY = [TICKER_PRICE_CHANGE['bidQty'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    ASK_PRICE = [TICKER_PRICE_CHANGE['askPrice'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    ASK_QTY = [TICKER_PRICE_CHANGE['askQty'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    OPEN_PRICE = [TICKER_PRICE_CHANGE['openPrice'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    HIGH_PRICE = [TICKER_PRICE_CHANGE['highPrice'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    LOW_PRICE = [TICKER_PRICE_CHANGE['lowPrice'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    VOLUME = [TICKER_PRICE_CHANGE['volume'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    QUOTE_VOLUME = [TICKER_PRICE_CHANGE['quoteVolume'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    OPEN_TIME = [TICKER_PRICE_CHANGE['openTime'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    ASK_PRICE = [TICKER_PRICE_CHANGE['symbol'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    CLOSE_TIME = [TICKER_PRICE_CHANGE['closeTime'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    FIRST_ID = [TICKER_PRICE_CHANGE['firstId'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    LAST_ID = [TICKER_PRICE_CHANGE['lastId'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    COUNT = [TICKER_PRICE_CHANGE['count'] for TICKER_PRICE_CHANGE in TICKER_PRICE_CHANGE_24H]
+    return DataFrame({
+        "SYMBOL":SYMBOL,
+        "PRICE_CHANGE":PRICE_CHANGE,
+        "PRICE_CHANGE_PERCENT":PRICE_CHANGE_PERCENT,
+        "WEIGHTED_AVGPRICE":WEIGHTED_AVGPRICE,
+        "PREV_CLOSE_PRICE":PREV_CLOSE_PRICE,
+        "LAST_PRICE":LAST_PRICE,
+        "LAST_QTY":LAST_QTY,
+        "BID_PRICE":BID_PRICE,
+        "BID_QTY":BID_QTY,
+        "ASK_PRICE":ASK_PRICE,
+        "ASK_QTY":ASK_QTY,
+        "OPEN_PRICE":OPEN_PRICE,
+        "HIGH_PRICE":HIGH_PRICE,
+        "LOW_PRICE":LOW_PRICE,
+        "VOLUME":VOLUME,
+        "QUOTE_VOLUME":QUOTE_VOLUME,
+        "OPEN_TIME":OPEN_TIME,
+        "CLOSE_TIME":CLOSE_TIME,
+        "FIRST_ID":FIRST_ID,
+        "LAST_ID":LAST_ID,
+        "COUNT":COUNT
+    })
+
+
+def GET_SYMBOL_ORDER_BOOK_TICKER(SYMBOLS=["BTCUSDT"]):
+    SYMBOLS = [SYMBOL.upper() for SYMBOL in SYMBOLS]
+    STR = urllib.parse.quote(str(SYMBOLS).replace("'",'"'))
+    STR = STR.replace('%2C%20',',')
+    URL = f'https://www.binance.com/api/v3/ticker/bookTicker?symbols={STR}' 
     RES = requests.get(URL)
     if RES.status_code != 200:
         return "It has been determined that the symbol provided is invalid. Please utilize the GET_SYMBOLS function to retrieve a list of valid symbols, and display them for reference."
-    return RES.json()
-
+    SYMBOL_ORDER_BOOK_TICKER =  RES.json()
+    SYMBOL = [TICKER['symbol'] for TICKER in SYMBOL_ORDER_BOOK_TICKER]
+    BIDPRICE = [TICKER['bidPrice'] for TICKER in SYMBOL_ORDER_BOOK_TICKER]
+    BIDQTY = [TICKER['bidQty'] for TICKER in SYMBOL_ORDER_BOOK_TICKER]
+    ASKPRICE = [TICKER['askPrice'] for TICKER in SYMBOL_ORDER_BOOK_TICKER]
+    ASKQTY = [TICKER['askQty'] for TICKER in SYMBOL_ORDER_BOOK_TICKER]
+    return DataFrame({
+        "SYMBOL":SYMBOL,
+        "BIDPRICE":BIDPRICE,
+        "BIDQTY":BIDQTY,
+        "ASKPRICE":ASKPRICE,
+        "ASKQTY":ASKQTY
+    })
     
+
+
+
 
 
