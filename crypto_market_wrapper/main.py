@@ -3,6 +3,12 @@ import urllib
 from pandas import DataFrame
 
 def GET_SYMBOLS():
+    """
+    The function provides a DataFrame of valid cryptocurrency symbols.
+    
+    Returns:
+        DataFrame: Symbols
+    """
     URL = 'https://www.binance.com/api/v3/exchangeInfo' 
     RES = requests.get(URL)
     DATA = RES.json()
@@ -10,6 +16,16 @@ def GET_SYMBOLS():
     return DataFrame({'SYMBOLS':SYMBOLS})
 
 def GET_RECENT_TRADES_LIST(SYMBOL):
+    """
+    The function provides a DataFrame containing a list of recent trades.
+
+    Args:
+        SYMBOL (str, required): A valid symbol is required.
+
+    Returns:
+        DataFrame: Recent Trades List
+
+    """
     URL = f'https://www.binance.com/api/v3/trades?symbol={SYMBOL.upper()}' 
     RES = requests.get(URL)
     if RES.status_code != 200:
@@ -31,6 +47,15 @@ def GET_RECENT_TRADES_LIST(SYMBOL):
     })
 
 def GET_AGGREGATE_TRADES_LIST(SYMBOL):
+    """
+    The function provides a DataFrame containing an aggregate list of trades
+
+    Args:
+        SYMBOL (str, required): A valid symbol is required.
+
+    Returns:
+        DataFrame: Aggregate Trades List
+    """
     URL = f'https://www.binance.com/api/v3/aggTrades?symbol={SYMBOL.upper()}' 
     RES = requests.get(URL)
     if RES.status_code != 200:
@@ -54,6 +79,17 @@ def GET_AGGREGATE_TRADES_LIST(SYMBOL):
     })
 
 def GET_CANDLESTICK_DATA(SYMBOL,INTERVAL,LIMIT=500):
+    """
+    The function provides a DataFrame containing candlestick data.
+    
+    Args:
+        SYMBOL (str, required): A valid symbol is required.
+        INTERVAL (str, required): A valid interval is required.('1s','1m','3m','5m','15m','30m','1h','2h','4h','6h','8h','12h','1d','3d','1w','1M')
+        LIMIT (int, optional): A valid symbol is required(1000). Defaults to 500.
+
+    Returns:
+        DataFrame: Candlestick Data
+    """
     if not INTERVAL in ['1s','1m','3m','5m','15m','30m','1h','2h','4h','6h','8h','12h','1d','3d','1w','1M']:
         print('It has been determined that the specified interval is invalid. Please note that the valid intervals are as follows:')
         print("'1s','1m','3m','5m','15m','30m','1h','2h','4h','6h','8h','12h','1d','3d','1w','1M'. Please select one of these intervals for use.")
@@ -83,6 +119,17 @@ def GET_CANDLESTICK_DATA(SYMBOL,INTERVAL,LIMIT=500):
     })
 
 def GET_UIKLINES(SYMBOL,INTERVAL,LIMIT=500):
+    """
+    The function provides a DataFrame containing candlestick data.
+
+    Args:
+        SYMBOL (str, required): A valid symbol is required.
+        INTERVAL (str, required): A valid interval is required.('1s','1m','3m','5m','15m','30m','1h','2h','4h','6h','8h','12h','1d','3d','1w','1M')
+        LIMIT (int, optional):  A valid limit is required(1000). Defaults to 500.
+
+    Returns:
+        DataFrame: UIKlines
+    """
     if not INTERVAL in ['1s','1m','3m','5m','15m','30m','1h','2h','4h','6h','8h','12h','1d','3d','1w','1M']:
         txt = '''
         It has been determined that the specified interval is invalid. Please note that the valid intervals are as follows:\n
@@ -115,6 +162,16 @@ def GET_UIKLINES(SYMBOL,INTERVAL,LIMIT=500):
     })
 
 def GET_CURRENT_AVERAGE_PRICE(SYMBOL):
+    """
+    The function provides a dictionary containing the current average price
+
+    Args:
+        SYMBOL (str, required): A valid symbol is required.
+
+    Returns:
+        Dict: Current Average Price
+
+    """
     URL = f'https://www.binance.com/api/v3/avgPrice?symbol={SYMBOL}' 
     RES = requests.get(URL)
     if RES.status_code != 200:
@@ -122,6 +179,16 @@ def GET_CURRENT_AVERAGE_PRICE(SYMBOL):
     return RES.json()
 
 def GET_TICKER_PRICE_CHANGE_24H(SYMBOLS=["BTCUSDT"]):
+    """
+    The function provides a DataFrame containing 24-hour ticker price change statistics.
+
+    Args:
+        SYMBOLS (list, optional): A valid symbol is required. Defaults to ["BTCUSDT"].
+
+    Returns:
+        DataFrame: 24hr Ticker Price Change Statistics
+
+    """
     SYMBOLS = [SYMBOL.upper() for SYMBOL in SYMBOLS]
     STR = urllib.parse.quote(str(SYMBOLS).replace("'",'"'))
     STR = STR.replace('%2C%20',',')
@@ -178,6 +245,15 @@ def GET_TICKER_PRICE_CHANGE_24H(SYMBOLS=["BTCUSDT"]):
 
 
 def GET_SYMBOL_ORDER_BOOK_TICKER(SYMBOLS=["BTCUSDT"]):
+    """
+    The function provides a DataFrame containing order book ticker data.
+    
+    Args:
+        SYMBOLS (list, optional): _description_. Defaults to ["BTCUSDT"].
+
+    Returns:
+        DataFrame: Order Book Ticker
+    """
     SYMBOLS = [SYMBOL.upper() for SYMBOL in SYMBOLS]
     STR = urllib.parse.quote(str(SYMBOLS).replace("'",'"'))
     STR = STR.replace('%2C%20',',')
@@ -199,8 +275,6 @@ def GET_SYMBOL_ORDER_BOOK_TICKER(SYMBOLS=["BTCUSDT"]):
         "ASKQTY":ASKQTY
     })
     
-
-
 
 
 
