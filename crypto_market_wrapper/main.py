@@ -113,9 +113,20 @@ def GET_UIKLINES(SYMBOL,INTERVAL,LIMIT=500):
         'CLOSE_TIME':CLOSE_TIME,
     })
 
+def GET_CURRENT_AVERAGE_PRICE(SYMBOL):
+    URL = f'https://www.binance.com/api/v3/avgPrice?symbol={SYMBOL}' 
+    RES = requests.get(URL)
+    if RES.status_code != 200:
+        return "It has been determined that the symbol provided is invalid. Please utilize the GET_SYMBOLS function to retrieve a list of valid symbols, and display them for reference."
+    return RES.json()
+
+def GET_TICKER_PRICE_CHANGE_24H(SYMBOL):
+    URL = f'https://www.binance.com/api/v3/ticker/24hr?symbol={SYMBOL}' 
+    RES = requests.get(URL)
+    if RES.status_code != 200:
+        return "It has been determined that the symbol provided is invalid. Please utilize the GET_SYMBOLS function to retrieve a list of valid symbols, and display them for reference."
+    return RES.json()
 
     
-    
-df = GET_UIKLINES('btcusdt','20m',1000)
-print(df)
+
 
