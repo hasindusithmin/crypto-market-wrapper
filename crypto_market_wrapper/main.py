@@ -13,7 +13,7 @@ def GET_RECENT_TRADES_LIST(SYMBOL):
     URL = f'https://www.binance.com/api/v3/trades?symbol={SYMBOL.upper()}' 
     RES = requests.get(URL)
     if RES.status_code != 200:
-        return "It has been determined that the symbol provided is invalid. Please utilize the GET_SYMBOLS function to retrieve a list of valid symbols, and display them for reference."
+        return "It has been determined that the symbol provided is invalid. Please utilize the GET_RECENT_TRADES_LIST function to retrieve a list of valid symbols, and display them for reference."
     RECENT_TRADES_LIST = RES.json()
     TIME = [RECENT_TRADE['time'] for RECENT_TRADE in RECENT_TRADES_LIST]
     PRICE = [float(RECENT_TRADE['price']) for RECENT_TRADE in RECENT_TRADES_LIST]
@@ -34,7 +34,7 @@ def GET_AGGREGATE_TRADES_LIST(SYMBOL):
     URL = f'https://www.binance.com/api/v3/aggTrades?symbol={SYMBOL.upper()}' 
     RES = requests.get(URL)
     if RES.status_code != 200:
-        return "It has been determined that the symbol provided is invalid. Please utilize the GET_SYMBOLS function to retrieve a list of valid symbols, and display them for reference."
+        return "It has been determined that the symbol provided is invalid. Please utilize the GET_AGGREGATE_TRADES_LIST function to retrieve a list of valid symbols, and display them for reference."
     AGGREGATE_TRADES_LIST = RES.json()
     AGGREGATE_TRADE_ID = [AGGREGATE_TRADE['a'] for AGGREGATE_TRADE in AGGREGATE_TRADES_LIST]
     TIMESTAMP = [AGGREGATE_TRADE['T'] for AGGREGATE_TRADE in AGGREGATE_TRADES_LIST]
@@ -62,7 +62,7 @@ def GET_CANDLESTICK_DATA(SYMBOL,INTERVAL,LIMIT=500):
         URL = f'https://www.binance.com/api/v3/klines?symbol={SYMBOL.upper()}&interval={INTERVAL}&limit=1000' 
     RES = requests.get(URL)
     if RES.status_code != 200:
-        return "It has been determined that the symbol provided is invalid. Please utilize the GET_SYMBOLS function to retrieve a list of valid symbols, and display them for reference."
+        return "It has been determined that the symbol provided is invalid. Please utilize the GET_CANDLESTICK_DATA function to retrieve a list of valid symbols, and display them for reference."
     # OPEN_TIME,OPEN_PRICE,HIGH_PRICE,LOW_PRICE,CLOSE_PRICE,VOLUME,CLOSE_TIME
     CANDLESTICK_DATA = RES.json()
     OPEN_TIME = [CANDLESTICK[0] for CANDLESTICK in CANDLESTICK_DATA]
@@ -94,7 +94,7 @@ def GET_UIKLINES(SYMBOL,INTERVAL,LIMIT=500):
         URL = f'https://www.binance.com/api/v3/klines?symbol={SYMBOL.upper()}&interval={INTERVAL}&limit=1000' 
     RES = requests.get(URL)
     if RES.status_code != 200:
-        return "It has been determined that the symbol provided is invalid. Please utilize the GET_SYMBOLS function to retrieve a list of valid symbols, and display them for reference."
+        return "It has been determined that the symbol provided is invalid. Please utilize the GET_UIKLINES function to retrieve a list of valid symbols, and display them for reference."
     # OPEN_TIME,OPEN_PRICE,HIGH_PRICE,LOW_PRICE,CLOSE_PRICE,VOLUME,CLOSE_TIME
     CANDLESTICK_DATA = RES.json()
     OPEN_TIME = [CANDLESTICK[0] for CANDLESTICK in CANDLESTICK_DATA]
@@ -118,7 +118,7 @@ def GET_CURRENT_AVERAGE_PRICE(SYMBOL):
     URL = f'https://www.binance.com/api/v3/avgPrice?symbol={SYMBOL}' 
     RES = requests.get(URL)
     if RES.status_code != 200:
-        return "It has been determined that the symbol provided is invalid. Please utilize the GET_SYMBOLS function to retrieve a list of valid symbols, and display them for reference."
+        return "It has been determined that the symbol provided is invalid. Please utilize the GET_CURRENT_AVERAGE_PRICE function to retrieve a list of valid symbols, and display them for reference."
     return RES.json()
 
 def GET_TICKER_PRICE_CHANGE_24H(SYMBOLS=["BTCUSDT"]):
@@ -184,7 +184,7 @@ def GET_SYMBOL_ORDER_BOOK_TICKER(SYMBOLS=["BTCUSDT"]):
     URL = f'https://www.binance.com/api/v3/ticker/bookTicker?symbols={STR}' 
     RES = requests.get(URL)
     if RES.status_code != 200:
-        return "It has been determined that the symbol provided is invalid. Please utilize the GET_SYMBOLS function to retrieve a list of valid symbols, and display them for reference."
+        return "It has been determined that the symbol provided is invalid. Please utilize the GET_SYMBOL_ORDER_BOOK_TICKER function to retrieve a list of valid symbols, and display them for reference."
     SYMBOL_ORDER_BOOK_TICKER =  RES.json()
     SYMBOL = [TICKER['symbol'] for TICKER in SYMBOL_ORDER_BOOK_TICKER]
     BIDPRICE = [TICKER['bidPrice'] for TICKER in SYMBOL_ORDER_BOOK_TICKER]
