@@ -13,7 +13,7 @@ With this package, users can access:
 #### Install
 
 ```
-pip install crypto_market_wrapper
+pip install crypto-market-wrapper
 ```
 
 
