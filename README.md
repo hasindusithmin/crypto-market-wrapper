@@ -30,6 +30,7 @@ The function provides a DataFrame of valid cryptocurrency symbols.
     Returns:
         DataFrame: Symbols
 
+usage
 ```
 crypto.GET_SYMBOLS()
 ```
@@ -44,6 +45,7 @@ The function provides a DataFrame containing a list of recent trades.
     Returns:
         DataFrame: Recent Trades List
 
+usage
 ```
 crypto.GET_RECENT_TRADES_LIST()
 ```
@@ -58,6 +60,7 @@ The function provides a DataFrame containing an aggregate list of trades
     Returns:
         DataFrame: Aggregate Trades List
 
+usage
 ```
 crypto.GET_AGGREGATE_TRADES_LIST()
 ```
@@ -73,7 +76,8 @@ crypto.GET_AGGREGATE_TRADES_LIST()
 
     Returns:
         DataFrame: Candlestick Data
-    
+
+usage  
 ```
 crypto.GET_CANDLESTICK_DATA()
 ```
@@ -90,6 +94,7 @@ The function provides a DataFrame containing candlestick data.
     Returns:
         DataFrame: UIKlines
 
+usage
 ```
 crypto.GET_UIKLINES()
 ```
@@ -105,6 +110,7 @@ The function provides a dictionary containing the current average price
     Returns:
         Dict: Current Average Price
 
+usage
 ```
 crypto.GET_CURRENT_AVERAGE_PRICE()
 ```
@@ -119,6 +125,7 @@ The function provides a DataFrame containing 24-hour ticker price change statist
     Returns:
         DataFrame: 24hr Ticker Price Change Statistics
 
+usage
 ```
 crypto.GET_TICKER_PRICE_CHANGE_24H()
 ```
@@ -134,6 +141,7 @@ The function provides a DataFrame containing order book ticker data.
     Returns:
         DataFrame: Order Book Ticker
 
+usage
 ```
 crypto.GET_SYMBOL_ORDER_BOOK_TICKER()
 ```
