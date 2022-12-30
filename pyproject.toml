@@ -7,7 +7,7 @@ readme = "README.md"
 repository="https://github.com/hasindusithmin/crypto-market-wrapper.git"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.6"
 requests = "^2.28.1"
 pandas = "^1.5.2"
 
