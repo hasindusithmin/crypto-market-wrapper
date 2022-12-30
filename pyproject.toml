@@ -5,9 +5,6 @@ description = ""
 authors = ["hasindusithmin <hasindusithmin64@gmail.com>"]
 readme = "README.md"
 
-[tool.poetry.scripts]
-crypto_market_wrapper = "crypto_market_wrapper.crypto"
-
 [tool.poetry.dependencies]
 python = "^3.11"
 requests = "^2.28.1"
