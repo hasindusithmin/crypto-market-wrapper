@@ -3,6 +3,10 @@ name = "crypto-market-wrapper"
 version = "0.1.0"
 description = ""
 authors = ["hasindusithmin <hasindusithmin64@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+crypto_market_wrapper = "crypto_market_wrapper.crypto"
 
 [tool.poetry.dependencies]
 python = "^3.11"
